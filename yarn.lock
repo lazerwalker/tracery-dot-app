@@ -1561,11 +1561,6 @@ concat-stream@1.6.2, concat-stream@^1.4.7:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
-connective@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/connective/-/connective-1.0.0.tgz#17d5dd436d416c7dce309dcce33db1ee0594b1e8"
-  integrity sha1-F9XdQ21BbH3OMJ3M4z2x7gWUseg=
-
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
@@ -4108,7 +4103,7 @@ mksnapshot@^0.3.0:
     fs-extra "0.26.7"
     request "^2.79.0"
 
-monaco-editor@^0.15.1:
+monaco-editor@^0.15.6:
   version "0.15.6"
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.15.6.tgz#d63b3b06f86f803464f003b252627c3eb4a09483"
   integrity sha512-JoU9V9k6KqT9R9Tiw1RTU8ohZ+Xnf9DMg6Ktqqw5hILumwmq7xqa/KLXw513uTUsWbhtnHoSJYYR++u3pkyxJg==
@@ -5005,7 +5000,7 @@ promise@~2.0:
   dependencies:
     is-promise "~1"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.4:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
@@ -5126,15 +5121,6 @@ react-hot-loader@^3.0.0-beta.6:
     react-proxy "^3.0.0-alpha.0"
     redbox-react "^1.3.6"
     source-map "^0.6.1"
-
-react-monaco-editor@^0.22.0:
-  version "0.22.0"
-  resolved "https://registry.yarnpkg.com/react-monaco-editor/-/react-monaco-editor-0.22.0.tgz#2ba4c9557d2e95bb0f097a56f5e5d30598f7f2f9"
-  integrity sha512-SdkfmdbHNzKLd33w98Wxm1MvvGC7sKqdxb79ij6XnYV5WH2zgL5BgJ2FCo/ZDh/JZgUp1mXGt8NjTcbLJVhqVw==
-  dependencies:
-    "@types/react" "*"
-    monaco-editor "^0.15.1"
-    prop-types "^15.6.2"
 
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
@@ -5617,11 +5603,6 @@ single-line-log@^1.1.2:
   integrity sha1-wvg/Jzo+GhbtsJlWYdoO1e8DM2Q=
   dependencies:
     string-width "^1.0.1"
-
-ski@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ski/-/ski-1.0.0.tgz#15e49dfd4f044260e26fc73c01426511852137b6"
-  integrity sha1-FeSd/U8EQmDib8c8AUJlEYUhN7Y=
 
 slash@^1.0.0:
   version "1.0.0"
@@ -6118,14 +6099,6 @@ tracery-grammar@^2.7.3:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/tracery-grammar/-/tracery-grammar-2.7.3.tgz#463e05f017fb6891de4baea7d464199b697acbea"
   integrity sha1-Rj4F8Bf7aJHeS66n1GQZm2l6y+o=
-
-tracery@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tracery/-/tracery-1.0.3.tgz#3c1333c52abb204bd01b31e650a26b7a01c5f71d"
-  integrity sha1-PBMzxSq7IEvQGzHmUKJregHF9x0=
-  dependencies:
-    connective "~1.0.0"
-    ski "~1.0.0"
 
 transformers@2.1.0:
   version "2.1.0"
