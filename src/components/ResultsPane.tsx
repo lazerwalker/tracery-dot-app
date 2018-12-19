@@ -23,17 +23,8 @@ export default function (props: Props) {
   const results = props.results.map((r, i) => <ListItem result={r} index={i} onLockToggle={props.onLockToggle} />);
   const completeCopyText = props.results.map(r => r.text).join('\n');
 
-  return <div id='render' style={{
-    float: 'right',
-    height: '100vh',
-    width: '50vw'
-  }}>
-    <div
-      id='navbar'
-      style={{
-        position: 'relative',
-        textAlign: 'center'
-      }}>
+  return <div id='render'>
+    <div id='navbar'>
       <ClipboardButton
         style={{
           position: 'absolute',

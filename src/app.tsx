@@ -53,17 +53,13 @@ export class App extends React.Component<{}, State> {
         />
         <AceEditor
           value={this.state.code}
+          id='editor'
           mode='javascript'
           theme='monokai'
           debounceChangePeriod={1000}
           onChange={this.onChange}
           name='editor'
           editorProps={{ $blockScrolling: true }}
-          style={{
-            float: 'left',
-            height: '100vh',
-            width: '50vw'
-          }}
         />;
       </div >
     );

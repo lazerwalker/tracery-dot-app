@@ -43,8 +43,8 @@ export default class OriginDropdown extends React.Component<Props, State> {
     const current = <DropdownItem key={this.props.origin}>{this.props.origin}</DropdownItem>;
 
     return (
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle caret>
+      <Dropdown id='dropdown' isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle color='link' caret>
           {this.props.origin}
         </DropdownToggle>
         <DropdownMenu>

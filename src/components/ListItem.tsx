@@ -17,15 +17,17 @@ export default class ListItem extends React.Component<Props, {}> {
     const { index, result } = this.props;
 
     const lockButton = <button
+      className='lock'
       onClick={this.toggleLock}>
       <FontAwesomeIcon icon={result.locked ? faLock : faLockOpen} />
     </button>;
 
     return <li
+      className='result'
       key={`result-${index}`}>
+      <CopyButton text={result.text} style={{ position: 'absolute', right: '10px' }} />
       {lockButton}
-      {result.text}
-      <CopyButton text={result.text} />
+      <p>{result.text}</p>
     </li>;
 
   }
