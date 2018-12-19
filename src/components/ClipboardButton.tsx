@@ -3,6 +3,7 @@ import * as React from 'react';
 
 interface Props {
   text: string;
+  style?: React.CSSProperties;
 }
 
 export default function (props: Props) {
@@ -10,10 +11,6 @@ export default function (props: Props) {
     onClick={() => {
       clipboard.writeText(props.text);
     }}
-    style={{
-      position: 'absolute',
-      left: 20,
-      top: 0
-    }}
+    style={props.style || {}}
   >C</button>;
 }

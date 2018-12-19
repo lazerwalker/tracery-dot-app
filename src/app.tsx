@@ -50,7 +50,7 @@ export class App extends React.Component<{}, State> {
 
   render() {
     const results = this.state.results.map((r, i) => {
-      return <li key={`result-${i}`}>{r.text} ({r.locked ? 'L' : 'U'})</li>;
+      return <li key={`result-${i}`}>{r.text} ({r.locked ? 'L' : 'U'}) <CopyButton text={r.text} /></li>;
     });
 
     const completeCopyText = this.state.results.map(r => r.text).join('\n');
@@ -68,7 +68,13 @@ export class App extends React.Component<{}, State> {
               position: 'relative',
               textAlign: 'center'
             }}>
-            <CopyButton text={completeCopyText} />
+            <CopyButton
+              style={{
+                position: 'absolute',
+                left: 20,
+                top: 0
+              }}
+              text={completeCopyText} />
             <h2>{this.state.origin}</h2>
             <button
               onClick={this.onRefresh}
