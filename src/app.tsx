@@ -107,7 +107,13 @@ export class App extends React.Component<{}, State> {
   }
 
   onOriginChange = (origin: string) => {
-    const newState = this.calculateResults({ ...this.state, origin });
+    let newState = { ...this.state, origin };
+    newState.results = newState.results.map(r => {
+      r.locked = false;
+      return r;
+    });
+    newState = this.calculateResults(newState);
+
     this.setState(newState);
   }
 
