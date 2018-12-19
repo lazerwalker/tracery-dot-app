@@ -4,6 +4,9 @@ import { Result } from '../state';
 import ListItem from './ListItem';
 import ClipboardButton from './ClipboardButton';
 
+import { Button } from 'reactstrap';
+import OriginDropdown from './OriginDropdown';
+
 interface Props {
   results: Result[];
   origin: string;
@@ -32,15 +35,16 @@ export default function (props: Props) {
           top: 0
         }}
         text={completeCopyText} />
-      <h2>{props.origin}</h2>
-      <button
+      <OriginDropdown origin='origin' nodes={['origin', 'other', 'third']} />
+
+      <Button
         onClick={props.onRefresh}
         style={{
           position: 'absolute',
           right: 20,
           top: 0
         }}
-      >R</button>
+      >R</Button>
     </div>
     <ul>{results}</ul>
   </div>;

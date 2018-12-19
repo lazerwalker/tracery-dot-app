@@ -1,10 +1,7 @@
 import * as React from 'react';
 import AceEditor from 'react-ace';
 
-import CopyButton from './components/ClipboardButton';
-
 import { State, Result } from './state';
-import ListItem from './components/ListItem';
 import ResultsPane from './components/ResultsPane';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
@@ -62,8 +59,8 @@ export class App extends React.Component<{}, State> {
             width: '50vw'
           }}
         />;
-      </div >;
-    )
+      </div >
+    );
   }
 
   onChange = (newValue: string) => {

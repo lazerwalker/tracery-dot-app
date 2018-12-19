@@ -1,5 +1,6 @@
 import { clipboard } from 'electron';
 import * as React from 'react';
+import { Button } from 'reactstrap';
 
 interface Props {
   text: string;
@@ -7,10 +8,10 @@ interface Props {
 }
 
 export default function (props: Props) {
-  return <button
+  return <Button
     onClick={() => {
       clipboard.writeText(props.text);
     }}
     style={props.style || {}}
-  >C</button>;
+  >C</Button>;
 }
