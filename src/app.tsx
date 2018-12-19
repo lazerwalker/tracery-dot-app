@@ -1,7 +1,7 @@
 import * as React from 'react';
 import AceEditor from 'react-ace';
 
-import { State, Result } from './state';
+import { State } from './state';
 import ResultsPane from './components/ResultsPane';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
@@ -15,6 +15,8 @@ require('brace/theme/monokai');
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 const tracery = require('tracery-grammar');
+
+(window as any).tracery = tracery;
 
 export class App extends React.Component<{}, State> {
   state: State;
@@ -31,7 +33,7 @@ export class App extends React.Component<{}, State> {
     const grammar = tracery.createGrammar();
     grammar.addModifiers(tracery.baseEngModifiers);
     const code = JSON.stringify(rawGrammar, null, 2);
-    this.state = { code, origin: 'origin', results: [] };
+    this.state = { code, origin: 'origin', nodes: ['animal', 'emotion', 'origin'], results: [] };
   }
 
   componentDidMount = () => {
@@ -44,7 +46,10 @@ export class App extends React.Component<{}, State> {
         <ResultsPane
           results={this.state.results}
           origin={this.state.origin}
-          onRefresh={this.onRefresh} />
+          nodes={this.state.nodes}
+          onRefresh={this.onRefresh}
+          onOriginChange={this.onOriginChange}
+        />
         <AceEditor
           value={this.state.code}
           mode='javascript'
@@ -92,11 +97,16 @@ export class App extends React.Component<{}, State> {
       }
     }
     console.log(newResults);
-    return { ...state, results: newResults };
+    return { ...state, results: newResults, nodes: Object.keys(grammar.symbols) };
   }
 
   onRefresh = () => {
     const results = this.calculateResults(this.state);
     this.setState(results);
+  }
+
+  onOriginChange = (origin: string) => {
+    const newState = this.calculateResults({ ...this.state, origin });
+    this.setState(newState);
   }
 }

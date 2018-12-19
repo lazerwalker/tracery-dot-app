@@ -1,6 +1,7 @@
 export interface State {
   code: string;
   origin: string;
+  nodes: string[];
   results: Result[];
 }
 

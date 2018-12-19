@@ -10,7 +10,9 @@ import OriginDropdown from './OriginDropdown';
 interface Props {
   results: Result[];
   origin: string;
-  onRefresh: (() => void);
+  nodes: string[];
+  onRefresh?: () => void;
+  onOriginChange?: (origin: string) => void;
 }
 
 export default function (props: Props) {
@@ -35,7 +37,7 @@ export default function (props: Props) {
           top: 0
         }}
         text={completeCopyText} />
-      <OriginDropdown origin='origin' nodes={['origin', 'other', 'third']} />
+      <OriginDropdown origin={props.origin} nodes={props.nodes} onChange={props.onOriginChange} />
 
       <Button
         onClick={props.onRefresh}

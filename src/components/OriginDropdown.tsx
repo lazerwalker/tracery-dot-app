@@ -1,9 +1,12 @@
 import * as React from 'react';
+import * as _ from 'lodash';
+
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 interface Props {
   nodes: string[];
   origin: string;
+  onChange?: (origin: string) => void;
 }
 
 interface State {
@@ -26,8 +29,18 @@ export default class OriginDropdown extends React.Component<Props, State> {
     }));
   }
 
+  handleClick = (e: any) => {
+    const node = e.target.innerText; // TODO: lol.
+    if (this.props.onChange) {
+      this.props.onChange(node);
+    }
+  }
+
   render = () => {
-    const items = this.props.nodes.map(n => <DropdownItem key={n}>{n}</DropdownItem>);
+    const rawNodes = _(this.props.nodes).without(this.props.origin).sort().value();
+    const items = rawNodes.map(n => <DropdownItem key={n} onClick={this.handleClick}>{n}</DropdownItem>);
+
+    const current = <DropdownItem key={this.props.origin}>{this.props.origin}</DropdownItem>;
 
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -36,6 +49,8 @@ export default class OriginDropdown extends React.Component<Props, State> {
         </DropdownToggle>
         <DropdownMenu>
           {items}
+          <DropdownItem divider />
+          {current}
         </DropdownMenu>
       </Dropdown>
     );
