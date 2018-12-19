@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { clipboard } from 'electron';
 import AceEditor from 'react-ace';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
@@ -43,9 +43,13 @@ export class App extends React.Component<{}, State> {
     this.state = { code, origin: 'origin', results: [] };
   }
 
+  componentDidMount = () => {
+    this.onRefresh();
+  }
+
   render() {
     const results = this.state.results.map((r, i) => {
-      return <li key={`result-${i}`}>{r.text} ({r.locked ? 'L' : ''})</li>;
+      return <li key={`result-${i}`}>{r.text} ({r.locked ? 'L' : 'U'})</li>;
     });
 
     return (
@@ -55,7 +59,30 @@ export class App extends React.Component<{}, State> {
           height: '100vh',
           width: '50vw'
         }}>
-          <h2>{this.state.origin}</h2>
+          <div
+            id='navbar'
+            style={{
+              position: 'relative',
+              textAlign: 'center'
+            }}>
+            <button
+              onClick={this.onCopy}
+              style={{
+                position: 'absolute',
+                left: 20,
+                top: 0
+              }}
+            >C</button>
+            <h2>{this.state.origin}</h2>
+            <button
+              onClick={this.onRefresh}
+              style={{
+                position: 'absolute',
+                right: 20,
+                top: 0
+              }}
+            >R</button>
+          </div>
           <ul>{results}</ul>
         </div>
         <AceEditor
@@ -71,8 +98,8 @@ export class App extends React.Component<{}, State> {
             height: '100vh',
             width: '50vw'
           }}
-        />
-      </div>
+        />;
+      </div >
     );
   }
 
@@ -111,5 +138,10 @@ export class App extends React.Component<{}, State> {
   onRefresh = () => {
     const results = this.calculateResults(this.state);
     this.setState(results);
+  }
+
+  onCopy = () => {
+    const sentences = this.state.results.map(r => r.text);
+    clipboard.writeText(sentences.join('\n'));
   }
 }
