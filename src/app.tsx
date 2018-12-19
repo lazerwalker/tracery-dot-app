@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { clipboard } from 'electron';
 import AceEditor from 'react-ace';
+
+import CopyButton from './components/ClipboardButton';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 require('brace');
@@ -52,6 +53,8 @@ export class App extends React.Component<{}, State> {
       return <li key={`result-${i}`}>{r.text} ({r.locked ? 'L' : 'U'})</li>;
     });
 
+    const completeCopyText = this.state.results.map(r => r.text).join('\n');
+
     return (
       <div>
         <div id='render' style={{
@@ -65,14 +68,7 @@ export class App extends React.Component<{}, State> {
               position: 'relative',
               textAlign: 'center'
             }}>
-            <button
-              onClick={this.onCopy}
-              style={{
-                position: 'absolute',
-                left: 20,
-                top: 0
-              }}
-            >C</button>
+            <CopyButton text={completeCopyText} />
             <h2>{this.state.origin}</h2>
             <button
               onClick={this.onRefresh}
@@ -138,10 +134,5 @@ export class App extends React.Component<{}, State> {
   onRefresh = () => {
     const results = this.calculateResults(this.state);
     this.setState(results);
-  }
-
-  onCopy = () => {
-    const sentences = this.state.results.map(r => r.text);
-    clipboard.writeText(sentences.join('\n'));
   }
 }
