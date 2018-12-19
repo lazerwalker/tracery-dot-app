@@ -7,6 +7,9 @@ import ClipboardButton from './ClipboardButton';
 import { Button } from 'reactstrap';
 import OriginDropdown from './OriginDropdown';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
+
 interface Props {
   results: Result[];
   origin: string;
@@ -46,7 +49,9 @@ export default function (props: Props) {
           right: 20,
           top: 0
         }}
-      >R</Button>
+      >
+        <FontAwesomeIcon icon={faSyncAlt} />
+      </Button>
     </div>
     <ul>{results}</ul>
   </div>;
