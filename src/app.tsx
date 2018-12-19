@@ -43,10 +43,6 @@ export class App extends React.Component<{}, State> {
     this.state = { code, origin: 'origin', results: [] };
   }
 
-  shouldComponentUpdate(nextProps: any, nextState: State) {
-    return (this.state.code !== nextState.code);
-  }
-
   render() {
     const results = this.state.results.map((r, i) => {
       return <li key={`result-${i}`}>{r.text} ({r.locked ? 'L' : ''})</li>;
@@ -64,6 +60,7 @@ export class App extends React.Component<{}, State> {
           value={this.state.code}
           mode='javascript'
           theme='monokai'
+          debounceChangePeriod={1000}
           onChange={this.onChange}
           name='editor'
           editorProps={{ $blockScrolling: true }}
@@ -78,12 +75,12 @@ export class App extends React.Component<{}, State> {
   onChange = (newValue: string) => {
     // TODO: Add in Redux
     console.log('change', newValue);
-    this.setState({ ...this.state, code: newValue });
-    // this.onRefresh();
+    let newState = this.calculateResults({ ...this.state, code: newValue });
+    this.setState(newState);
   }
 
-  onRefresh = () => {
-    const { code, origin, results } = this.state;
+  calculateResults = (state: State) => {
+    const { code, origin, results } = state;
     const grammar = tracery.createGrammar(JSON.parse(code));
     grammar.addModifiers(tracery.baseEngModifiers);
 
@@ -94,7 +91,7 @@ export class App extends React.Component<{}, State> {
         continue;
       }
 
-      console.log(origin);
+      // console.log(origin);
       const text = grammar.flatten('#' + origin + '#');
 
       if (!newResults[i]) {
@@ -103,7 +100,12 @@ export class App extends React.Component<{}, State> {
         newResults[i].text = text;
       }
     }
+    console.log(newResults);
+    return { ...state, results: newResults };
+  }
 
-    this.setState({ ...this.state, results: newResults });
+  onRefresh = () => {
+    const results = this.calculateResults(this.state);
+    this.setState(results);
   }
 }

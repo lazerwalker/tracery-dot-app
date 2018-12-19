@@ -6,10 +6,20 @@ import { enableLiveReload } from 'electron-compile';
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow | null = null;
 
+import { Menu, MenuItem } from 'electron';
+
+const menu = new Menu();
+
+menu.append(new MenuItem({
+  label: 'Print',
+  accelerator: 'CmdOrCtrl+P',
+  click: () => { console.log('time to print stuff'); }
+}));
+
 const isDevMode = process.execPath.match(/[\\/]electron/);
 
 if (isDevMode) {
-  enableLiveReload({strategy: 'react-hmr'});
+  enableLiveReload({ strategy: 'react-hmr' });
 }
 
 const createWindow = async () => {
