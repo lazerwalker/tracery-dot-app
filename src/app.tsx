@@ -3,6 +3,10 @@ import AceEditor from 'react-ace';
 
 import CopyButton from './components/ClipboardButton';
 
+import { State, Result } from './state';
+import ListItem from './components/ListItem';
+import ResultsPane from './components/ResultsPane';
+
 // tslint:disable-next-line:no-require-imports no-var-requires
 require('brace');
 
@@ -14,17 +18,6 @@ require('brace/theme/monokai');
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 const tracery = require('tracery-grammar');
-
-interface State {
-  code: string;
-  origin: string;
-  results: Result[];
-}
-
-interface Result {
-  text: string;
-  locked: boolean;
-}
 
 export class App extends React.Component<{}, State> {
   state: State;
@@ -49,44 +42,12 @@ export class App extends React.Component<{}, State> {
   }
 
   render() {
-    const results = this.state.results.map((r, i) => {
-      return <li key={`result-${i}`}>{r.text} ({r.locked ? 'L' : 'U'}) <CopyButton text={r.text} /></li>;
-    });
-
-    const completeCopyText = this.state.results.map(r => r.text).join('\n');
-
     return (
       <div>
-        <div id='render' style={{
-          float: 'right',
-          height: '100vh',
-          width: '50vw'
-        }}>
-          <div
-            id='navbar'
-            style={{
-              position: 'relative',
-              textAlign: 'center'
-            }}>
-            <CopyButton
-              style={{
-                position: 'absolute',
-                left: 20,
-                top: 0
-              }}
-              text={completeCopyText} />
-            <h2>{this.state.origin}</h2>
-            <button
-              onClick={this.onRefresh}
-              style={{
-                position: 'absolute',
-                right: 20,
-                top: 0
-              }}
-            >R</button>
-          </div>
-          <ul>{results}</ul>
-        </div>
+        <ResultsPane
+          results={this.state.results}
+          origin={this.state.origin}
+          onRefresh={this.onRefresh} />
         <AceEditor
           value={this.state.code}
           mode='javascript'
@@ -101,8 +62,8 @@ export class App extends React.Component<{}, State> {
             width: '50vw'
           }}
         />;
-      </div >
-    );
+      </div >;
+    )
   }
 
   onChange = (newValue: string) => {
