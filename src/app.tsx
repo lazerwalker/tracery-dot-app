@@ -49,6 +49,7 @@ export class App extends React.Component<{}, State> {
           nodes={this.state.nodes}
           onRefresh={this.onRefresh}
           onOriginChange={this.onOriginChange}
+          onLockToggle={this.onLockToggle}
         />
         <AceEditor
           value={this.state.code}
@@ -108,5 +109,16 @@ export class App extends React.Component<{}, State> {
   onOriginChange = (origin: string) => {
     const newState = this.calculateResults({ ...this.state, origin });
     this.setState(newState);
+  }
+
+  onLockToggle = (resultIndex: number) => {
+    const result = { ...this.state.results[resultIndex] };
+    result.locked = !result.locked;
+
+    const newResults = [...this.state.results];
+
+    newResults[resultIndex] = result;
+
+    this.setState({ ...this.state, results: newResults });
   }
 }

@@ -16,10 +16,11 @@ interface Props {
   nodes: string[];
   onRefresh?: () => void;
   onOriginChange?: (origin: string) => void;
+  onLockToggle?: (resultIndex: number) => void;
 }
 
 export default function (props: Props) {
-  const results = props.results.map((r, i) => <ListItem result={r} index={i} />);
+  const results = props.results.map((r, i) => <ListItem result={r} index={i} onLockToggle={props.onLockToggle} />);
   const completeCopyText = props.results.map(r => r.text).join('\n');
 
   return <div id='render' style={{
@@ -42,7 +43,7 @@ export default function (props: Props) {
         text={completeCopyText} />
       <OriginDropdown origin={props.origin} nodes={props.nodes} onChange={props.onOriginChange} />
 
-      <Button
+      <button
         onClick={props.onRefresh}
         style={{
           position: 'absolute',
@@ -51,7 +52,7 @@ export default function (props: Props) {
         }}
       >
         <FontAwesomeIcon icon={faSyncAlt} />
-      </Button>
+      </button>
     </div>
     <ul>{results}</ul>
   </div>;
