@@ -1,6 +1,6 @@
 {
   "name": "tracery-dot-app",
-  "productName": "tracery-dot-app",
+  "productName": "Tracery",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.ts",

@@ -51,9 +51,11 @@ export class App extends React.Component<{}, State> {
     return (
       <div>
         <div id='render' style={{
-          float: 'right'
+          float: 'right',
+          height: '100vh',
+          width: '50vw'
         }}>
-          <h2>Welcome to React with Typescript!</h2>
+          <h2>{this.state.origin}</h2>
           <ul>{results}</ul>
         </div>
         <AceEditor
@@ -65,7 +67,9 @@ export class App extends React.Component<{}, State> {
           name='editor'
           editorProps={{ $blockScrolling: true }}
           style={{
-            float: 'left'
+            float: 'left',
+            height: '100vh',
+            width: '50vw'
           }}
         />
       </div>
