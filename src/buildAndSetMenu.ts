@@ -1,10 +1,73 @@
-import { Menu, app, shell } from 'electron';
+import { Menu, app, shell, MenuItem, BrowserWindow, MenuItemConstructorOptions } from 'electron';
 
 export default () => {
   const template = [
     {
       label: 'File',
-      submenu: []
+      submenu: [
+        {
+          label: 'New',
+          accelerator: 'CmdOrCtrl+N',
+          click: () => {
+            const mainWindow = new BrowserWindow({
+              width: 800,
+              height: 600,
+            });
+
+            // and load the index.html of the app.
+            mainWindow.loadURL(`file://${__dirname}/index.html`);
+          }
+        },
+        {
+          label: 'Open',
+          accelerator: 'CmdOrCtrl+O',
+          click: () => {
+            console.log('OPEN');
+          }
+        },
+        {
+          role: 'recentDocuments'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          role: 'close'
+        },
+        {
+          label: 'Save',
+          accelerator: 'CmdOrCtrl+S',
+          click: () => console.log('Save')
+        },
+        {
+          label: 'Duplicate',
+          accelerator: 'ShiftCmdOrCtrl+S',
+          click: () => console.log('Duplicate')
+        },
+        {
+          label: 'Rename...',
+          click: () => console.log('Rename')
+        },
+        {
+          label: 'Move To...',
+          click: () => console.log('Move to...')
+        },
+        {
+          label: 'Revert To',
+          click: () => console.log('Revert')
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Share',
+          click: () => console.log('Share')
+        },
+        {
+          label: 'Export',
+          click: () => console.log('Export')
+        },
+      ]
     },
     {
       label: 'Edit',
@@ -44,14 +107,14 @@ export default () => {
         {
           label: 'Reload',
           accelerator: 'CmdOrCtrl+R',
-          click(item: any, focusedWindow: any) {
+          click(_: MenuItem, focusedWindow: BrowserWindow) {
             if (focusedWindow) { focusedWindow.reload(); }
           }
         },
         {
           label: 'Toggle Developer Tools',
           accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
-          click(item: any, focusedWindow: any) {
+          click(_: MenuItem, focusedWindow: BrowserWindow) {
             if (focusedWindow) { focusedWindow.webContents.toggleDevTools(); }
           }
         },
@@ -98,8 +161,8 @@ export default () => {
   ];
 
   if (process.platform === 'darwin') {
-    const name = app.getName();
-    template.unshift({
+    const name = app.getName() || 'Tracery';
+    const submenu = {
       label: name,
       submenu: [
         {
@@ -131,32 +194,33 @@ export default () => {
           role: 'quit'
         }
       ]
-    });
+    };
+    template.unshift(submenu);
 
     // Window menu.
-    template[2].submenu = [
-      {
-        label: 'Close',
-        accelerator: 'CmdOrCtrl+W',
-        role: 'close'
-      },
-      {
-        label: 'Minimize',
-        accelerator: 'CmdOrCtrl+M',
-        role: 'minimize'
-      },
-      {
-        label: 'Zoom',
-        role: 'zoom'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Bring All to Front',
-        role: 'front'
-      }
-    ];
+    // template[2].submenu = [
+    //   {
+    //     label: 'Close',
+    //     accelerator: 'CmdOrCtrl+W',
+    //     role: 'close'
+    //   },
+    //   {
+    //     label: 'Minimize',
+    //     accelerator: 'CmdOrCtrl+M',
+    //     role: 'minimize'
+    //   },
+    //   {
+    //     label: 'Zoom',
+    //     role: 'zoom'
+    //   },
+    //   {
+    //     type: 'separator'
+    //   },
+    //   {
+    //     label: 'Bring All to Front',
+    //     role: 'front'
+    //   }
+    // ];
   }
 
   const menu = Menu.buildFromTemplate(template);
