@@ -1,12 +1,11 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu, MenuItem } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
+import buildAndSetMenu from './buildAndSetMenu';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow | null = null;
-
-import { Menu, MenuItem } from 'electron';
 
 const menu = new Menu();
 
@@ -45,6 +44,25 @@ const createWindow = async () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  buildAndSetMenu();
+  // const menu = Menu.buildFromTemplate([
+  //   {
+  //     label: 'Lol Penis',
+  //     submenu: [
+  //       { label: 'Adjust Notification Value' },
+  //       {
+  //         label: 'Refresh',
+  //         accelerator: 'CmdOrCtrl+R',
+  //         click: () => { console.log('Refresh '); }
+  //       },
+  //       {
+  //         label: 'Exit', click: () => { console.log('time to print stuff'); }
+  //       }
+  //     ]
+  //   }
+  // ]);
+  // Menu.setApplicationMenu(menu);
 };
 
 // This method will be called when Electron has finished
