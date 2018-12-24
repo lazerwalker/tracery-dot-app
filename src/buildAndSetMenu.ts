@@ -98,6 +98,14 @@ export default () => {
         },
         {
           role: 'selectall'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Refresh Results',
+          accelerator: 'CmdOrCtrl+R',
+          click: () => console.log('REFRESH')
         }
       ]
     },
@@ -106,7 +114,7 @@ export default () => {
       submenu: [
         {
           label: 'Reload',
-          accelerator: 'CmdOrCtrl+R',
+          accelerator: 'CmdOrCtrl+U',
           click(_: MenuItem, focusedWindow: BrowserWindow) {
             if (focusedWindow) { focusedWindow.reload(); }
           }
