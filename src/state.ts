@@ -4,6 +4,9 @@ export interface State {
   nodes: string[];
   results: Result[];
   filepath?: string;
+
+  wordWrap: boolean;
+  htmlRendering: boolean;
 }
 
 export interface Result {

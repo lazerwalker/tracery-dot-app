@@ -39,7 +39,7 @@ export class App extends React.Component<{}, State> {
     const grammar = tracery.createGrammar();
     grammar.addModifiers(tracery.baseEngModifiers);
     const code = JSON.stringify(rawGrammar, null, 2);
-    this.state = { code, origin: 'origin', nodes: ['origin', 'adjective'], results: [] };
+    this.state = { code, origin: 'origin', nodes: ['origin', 'adjective'], results: [], wordWrap: true, htmlRendering: true };
 
     this.aceRef = React.createRef();
   }
@@ -49,6 +49,9 @@ export class App extends React.Component<{}, State> {
 
     ipcRenderer.on('open', this.loadFile);
     ipcRenderer.on('save', this.saveFile);
+    ipcRenderer.on('toggleWordWrap', this.toggleWordWrap);
+    ipcRenderer.on('toggleHTMLRendering', this.toggleHTMLRendering);
+    ipcRenderer.on('refresh', this.onRefresh);
 
     ipcRenderer.send('ready');
   }
@@ -68,6 +71,7 @@ export class App extends React.Component<{}, State> {
           onRefresh={this.onRefresh}
           onOriginChange={this.onOriginChange}
           onLockToggle={this.onLockToggle}
+          renderHTML={this.state.htmlRendering}
         />
         <AceEditor
           value={this.state.code}
@@ -79,6 +83,7 @@ export class App extends React.Component<{}, State> {
           name='editor'
           editorProps={{ $blockScrolling: true }}
           ref={this.aceRef}
+          wrapEnabled={this.state.wordWrap}
         />;
       </div >
     );
@@ -162,5 +167,13 @@ export class App extends React.Component<{}, State> {
     newResults[resultIndex] = result;
 
     this.setState({ ...this.state, results: newResults });
+  }
+
+  toggleWordWrap = () => {
+    this.setState({ ...this.state, wordWrap: !this.state.wordWrap });
+  }
+
+  toggleHTMLRendering = () => {
+    this.setState({ ...this.state, htmlRendering: !this.state.htmlRendering });
   }
 }

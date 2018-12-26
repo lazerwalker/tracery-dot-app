@@ -15,6 +15,9 @@ export interface MenuOptions {
   newDocument: () => void;
   open: (file: TraceryFile, window?: BrowserWindow) => void;
   save: (window: BrowserWindow) => void;
+  toggleWordWrap: (window: BrowserWindow) => void;
+  toggleHTMLRendering: (window: BrowserWindow) => void;
+  refreshResults: (window: BrowserWindow) => void;
 }
 
 const createWindow = async (): Promise<BrowserWindow> => {
@@ -65,6 +68,15 @@ const options: MenuOptions = {
   },
   save: (window) => {
     window.webContents.send('save');
+  },
+  toggleWordWrap: (window) => {
+    window.webContents.send('toggleWordWrap');
+  },
+  toggleHTMLRendering: (window) => {
+    window.webContents.send('toggleHTMLRendering');
+  },
+  refreshResults: (window) => {
+    window.webContents.send('refresh');
   }
 };
 

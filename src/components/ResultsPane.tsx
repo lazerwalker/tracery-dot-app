@@ -17,10 +17,11 @@ interface Props {
   onRefresh?: () => void;
   onOriginChange?: (origin: string) => void;
   onLockToggle?: (resultIndex: number) => void;
+  renderHTML: boolean;
 }
 
 export default function (props: Props) {
-  const results = props.results.map((r, i) => <ListItem result={r} index={i} onLockToggle={props.onLockToggle} />);
+  const results = props.results.map((r, i) => <ListItem result={r} index={i} onLockToggle={props.onLockToggle} renderHTML={props.renderHTML} />);
   const completeCopyText = props.results.map(r => r.text).join('\n');
 
   return <div id='render'>

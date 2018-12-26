@@ -1,4 +1,4 @@
-import { Menu, app, shell, MenuItem, BrowserWindow } from 'electron';
+import { Menu, app, shell, MenuItem, BrowserWindow, Accelerator } from 'electron';
 
 import * as fileIO from './fileIO';
 import { MenuOptions } from './createWindow';
@@ -76,7 +76,7 @@ export default (options: MenuOptions, window: BrowserWindow) => {
         {
           label: 'Refresh Results',
           accelerator: 'CmdOrCtrl+R',
-          click: () => console.log('REFRESH')
+          click: () => options.refreshResults(window)
         }
       ]
     },
@@ -84,18 +84,13 @@ export default (options: MenuOptions, window: BrowserWindow) => {
       label: 'View',
       submenu: [
         {
-          label: 'Reload',
-          accelerator: 'CmdOrCtrl+U',
-          click(_: MenuItem, focusedWindow: BrowserWindow) {
-            if (focusedWindow) { focusedWindow.reload(); }
-          }
+          label: 'Toggle Word Wrap',
+          accelerator: 'Alt+Z',
+          click: () => { options.toggleWordWrap(window); }
         },
         {
-          label: 'Toggle Developer Tools',
-          accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
-          click(_: MenuItem, focusedWindow: BrowserWindow) {
-            if (focusedWindow) { focusedWindow.webContents.toggleDevTools(); }
-          }
+          label: 'Toggle Live HTML Rendering',
+          click: () => { options.toggleHTMLRendering(window); }
         },
         {
           type: 'separator'
