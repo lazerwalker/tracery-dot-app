@@ -31,7 +31,11 @@ Some features include:
 
 ## Contributing
 
-Contributions are welcome!
+Contributions are welcome! 
+
+Tracery.app is built using [Electron](http://github.com/electron/electron), which means it's a JavaScript webapp bundled up within a native shell. Specifically, it's built using TypeScript and React, with [Electron Forge](http://electronforge.io) to manage the build process.
+
+Yes, Electron apps are relatively unperformant compared to building proper native apps. Have that discussion elsewhere :)
 
 To get a dev environment up and running:
 
