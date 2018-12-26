@@ -93,7 +93,7 @@ export class App extends React.Component<{}, State> {
 
   saveFile = () => {
     const value = this.aceRef.current.editor.getValue();
-    console.log('Received save! Saving back', value;
+    console.log('Received save! Saving back', value);
 
     const f: TraceryFile = {
       filepath: this.state.filepath!,
@@ -111,8 +111,11 @@ export class App extends React.Component<{}, State> {
   }
 
   calculateResults = (state: State) => {
-    const { code, origin, results } = state;
-    const grammar = tracery.createGrammar(JSON.parse(code));
+    const { origin, results } = state;
+    const code = this.aceRef.current.editor.getValue();
+
+    // TODO: Do a security audit
+    const grammar = tracery.createGrammar(eval(`(function() { return ${code} })()`));
     grammar.addModifiers(tracery.baseEngModifiers);
 
     const newResults = [...results];
@@ -122,7 +125,6 @@ export class App extends React.Component<{}, State> {
         continue;
       }
 
-      // console.log(origin);
       const text = grammar.flatten('#' + origin + '#');
 
       if (!newResults[i]) {
