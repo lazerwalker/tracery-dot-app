@@ -26,7 +26,7 @@ export interface TraceryFile {
 
 // TODO: What if it's not a text file?
 export async function openFileMenu(): Promise<TraceryFile> {
-  return new Promise((_, reject) => {
+  return new Promise((resolve, reject) => {
     dialog.showOpenDialog({}, (fileNames) => {
       if (fileNames === undefined) {
         console.log('No file selected');
@@ -38,7 +38,7 @@ export async function openFileMenu(): Promise<TraceryFile> {
       }
 
       const filepath: string = fileNames[0];
-      return openFile(filepath);
+      resolve(openFile(filepath));
     });
   });
 }

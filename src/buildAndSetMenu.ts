@@ -24,7 +24,8 @@ export default (options: MenuOptions, window: BrowserWindow) => {
           }
         },
         {
-          role: 'recentDocuments'
+          role: 'recentDocuments',
+          submenu: []
         },
         {
           type: 'separator'
