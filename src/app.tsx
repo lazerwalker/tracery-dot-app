@@ -95,11 +95,6 @@ export class App extends React.Component<{}, State> {
     const value = this.aceRef.current.editor.getValue();
     console.log('Received save! Saving back', value;
 
-    if (!this.state.filepath) {
-      console.error('No filepath found!');
-      return;
-    }
-
     const f: TraceryFile = {
       filepath: this.state.filepath!,
       data: value

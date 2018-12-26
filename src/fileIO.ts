@@ -3,24 +3,26 @@ import { dialog, app } from 'electron';
 import * as fs from 'fs';
 
 export async function save(file: TraceryFile): Promise<TraceryFile> {
-  console.log('SAVING FILE', file.filepath, file.data);
   return new Promise((resolve, reject) => {
-    console.log('In promise');
-    fs.writeFile(file.filepath, file.data, 'utf8', (err) => {
-      if (err) {
-        reject('An error ocurred reading the file :' + err.message);
-        return;
-      }
-
-      console.log('Finished saving');
-
-      resolve(file);
-    });
+    if (file.filepath) {
+      fs.writeFile(file.filepath, file.data, 'utf8', (err) => {
+        if (err) {
+          reject('An error ocurred reading the file :' + err.message);
+          return;
+        }
+        resolve(file);
+      });
+    } else {
+      const filepath = dialog.showSaveDialog({});
+      app.addRecentDocument(filepath);
+      return save({ filepath, data: file.data });
+    }
   });
+
 }
 
 export interface TraceryFile {
-  filepath: string;
+  filepath?: string;
   data: string;
 }
 
