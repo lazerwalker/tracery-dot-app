@@ -41,35 +41,7 @@ export default (window: BrowserWindow) => {
           label: 'Save',
           accelerator: 'CmdOrCtrl+S',
           click: () => console.log('Save')
-        },
-        {
-          label: 'Duplicate',
-          accelerator: 'ShiftCmdOrCtrl+S',
-          click: () => console.log('Duplicate')
-        },
-        {
-          label: 'Rename...',
-          click: () => console.log('Rename')
-        },
-        {
-          label: 'Move To...',
-          click: () => console.log('Move to...')
-        },
-        {
-          label: 'Revert To',
-          click: () => console.log('Revert')
-        },
-        {
-          type: 'separator'
-        },
-        {
-          label: 'Share',
-          click: () => console.log('Share')
-        },
-        {
-          label: 'Export',
-          click: () => console.log('Export')
-        },
+        }
       ]
     },
     {
