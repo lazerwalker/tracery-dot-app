@@ -16,6 +16,7 @@ button {
   float: right;
   color: #444;
   height: 100vh;
+  overflow: scroll;
   width: 50vw;
 }
 
