@@ -1,4 +1,4 @@
-import { dialog } from 'electron';
+import { dialog, app } from 'electron';
 
 import * as fs from 'fs';
 
@@ -25,8 +25,8 @@ export interface TraceryFile {
 }
 
 // TODO: What if it's not a text file?
-export async function open(): Promise<TraceryFile> {
-  return new Promise((resolve, reject) => {
+export async function openFileMenu(): Promise<TraceryFile> {
+  return new Promise((_, reject) => {
     dialog.showOpenDialog({}, (fileNames) => {
       if (fileNames === undefined) {
         console.log('No file selected');
@@ -38,15 +38,21 @@ export async function open(): Promise<TraceryFile> {
       }
 
       const filepath: string = fileNames[0];
+      return openFile(filepath);
+    });
+  });
+}
 
-      fs.readFile(filepath, 'utf-8', (err, data) => {
-        if (err) {
-          reject('An error ocurred reading the file :' + err.message);
-          return;
-        }
+export async function openFile(filepath: string): Promise<TraceryFile> {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filepath, 'utf-8', (err, data) => {
+      if (err) {
+        reject('An error ocurred reading the file :' + err.message);
+        return;
+      }
 
-        resolve({ filepath, data });
-      });
+      app.addRecentDocument(filepath);
+      resolve({ filepath, data });
     });
   });
 }

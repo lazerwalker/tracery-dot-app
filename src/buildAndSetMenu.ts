@@ -19,7 +19,7 @@ export default (options: MenuOptions, window: BrowserWindow) => {
           label: 'Open',
           accelerator: 'CmdOrCtrl+O',
           click: async () => {
-            const data = await fileIO.open();
+            const data = await fileIO.openFileMenu();
             options.open(data, window);
           }
         },

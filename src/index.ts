@@ -2,7 +2,7 @@ import { app, Menu, MenuItem, ipcMain } from 'electron';
 import { enableLiveReload } from 'electron-compile';
 
 import createWindow, { windows } from './createWindow';
-import { TraceryFile, save } from './fileIO';
+import * as fileIO from './fileIO';
 
 const menu = new Menu();
 
@@ -40,9 +40,18 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('save', async (_: any, file: TraceryFile) => {
+app.on('open-file', async (sender: any, filepath: string) => {
+  // TODO: This code copy/pasted from createWindow's options object
+  const file = await fileIO.openFile(filepath);
+  const window = await createWindow();
+  ipcMain.once('ready', () => {
+    window.webContents.send('open', file);
+  });
+});
+
+ipcMain.on('save', async (_: any, file: fileIO.TraceryFile) => {
   console.log('Received save', file.data);
-  await save(file);
+  await fileIO.save(file);
 });
 
 // In this file you can include the rest of your app's specific main process
