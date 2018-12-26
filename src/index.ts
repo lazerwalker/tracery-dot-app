@@ -1,11 +1,13 @@
 import { app, BrowserWindow, Menu, MenuItem } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
+import * as _ from 'lodash';
+
 import buildAndSetMenu from './buildAndSetMenu';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow: Electron.BrowserWindow | null = null;
+let windows: Electron.BrowserWindow[] = [];
 
 const menu = new Menu();
 
@@ -23,46 +25,31 @@ if (isDevMode) {
 
 const createWindow = async () => {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
+  let window = new BrowserWindow({
     width: 800,
     height: 600,
   });
 
+  windows.push(window);
+
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
+  window.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
   if (isDevMode) {
     await installExtension(REACT_DEVELOPER_TOOLS);
-    mainWindow.webContents.openDevTools();
+    window.webContents.openDevTools();
   }
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', () => {
+  window.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null;
+    windows = _.without(windows, window);
   });
 
-  buildAndSetMenu();
-  // const menu = Menu.buildFromTemplate([
-  //   {
-  //     label: 'Lol Penis',
-  //     submenu: [
-  //       { label: 'Adjust Notification Value' },
-  //       {
-  //         label: 'Refresh',
-  //         accelerator: 'CmdOrCtrl+R',
-  //         click: () => { console.log('Refresh '); }
-  //       },
-  //       {
-  //         label: 'Exit', click: () => { console.log('time to print stuff'); }
-  //       }
-  //     ]
-  //   }
-  // ]);
-  // Menu.setApplicationMenu(menu);
+  buildAndSetMenu(window);
 };
 
 // This method will be called when Electron has finished
@@ -82,7 +69,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
+  if (windows.length === 0) {
     createWindow();
   }
 });

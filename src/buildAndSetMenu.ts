@@ -1,6 +1,8 @@
-import { Menu, app, shell, MenuItem, BrowserWindow, MenuItemConstructorOptions } from 'electron';
+import { Menu, app, shell, MenuItem, BrowserWindow } from 'electron';
 
-export default () => {
+import * as fileIO from './fileIO';
+
+export default (window: BrowserWindow) => {
   const template = [
     {
       label: 'File',
@@ -21,8 +23,9 @@ export default () => {
         {
           label: 'Open',
           accelerator: 'CmdOrCtrl+O',
-          click: () => {
-            console.log('OPEN');
+          click: async () => {
+            const data = await fileIO.open();
+            console.log(data);
           }
         },
         {
