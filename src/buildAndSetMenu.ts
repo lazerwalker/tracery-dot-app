@@ -1,8 +1,9 @@
 import { Menu, app, shell, MenuItem, BrowserWindow } from 'electron';
 
 import * as fileIO from './fileIO';
+import { MenuOptions } from './createWindow';
 
-export default (window: BrowserWindow) => {
+export default (options: MenuOptions) => {
   const template = [
     {
       label: 'File',
@@ -11,13 +12,7 @@ export default (window: BrowserWindow) => {
           label: 'New',
           accelerator: 'CmdOrCtrl+N',
           click: () => {
-            const mainWindow = new BrowserWindow({
-              width: 800,
-              height: 600,
-            });
-
-            // and load the index.html of the app.
-            mainWindow.loadURL(`file://${__dirname}/index.html`);
+            options.newDocument();
           }
         },
         {
@@ -25,7 +20,7 @@ export default (window: BrowserWindow) => {
           accelerator: 'CmdOrCtrl+O',
           click: async () => {
             const data = await fileIO.open();
-            console.log(data);
+            options.open(data);
           }
         },
         {

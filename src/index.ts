@@ -1,13 +1,7 @@
-import { app, BrowserWindow, Menu, MenuItem } from 'electron';
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import { app, Menu, MenuItem } from 'electron';
 import { enableLiveReload } from 'electron-compile';
-import * as _ from 'lodash';
 
-import buildAndSetMenu from './buildAndSetMenu';
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let windows: Electron.BrowserWindow[] = [];
+import createWindow, { windows } from './createWindow';
 
 const menu = new Menu();
 
@@ -22,35 +16,6 @@ const isDevMode = process.execPath.match(/[\\/]electron/);
 if (isDevMode) {
   enableLiveReload({ strategy: 'react-hmr' });
 }
-
-const createWindow = async () => {
-  // Create the browser window.
-  let window = new BrowserWindow({
-    width: 800,
-    height: 600,
-  });
-
-  windows.push(window);
-
-  // and load the index.html of the app.
-  window.loadURL(`file://${__dirname}/index.html`);
-
-  // Open the DevTools.
-  if (isDevMode) {
-    await installExtension(REACT_DEVELOPER_TOOLS);
-    window.webContents.openDevTools();
-  }
-
-  // Emitted when the window is closed.
-  window.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    windows = _.without(windows, window);
-  });
-
-  buildAndSetMenu(window);
-};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

@@ -6,13 +6,13 @@ export function save() {
   console.log('save');
 }
 
-interface File {
+export interface TraceryFile {
   filepath: string;
   data: string;
 }
 
 // TODO: What if it's not a text file?
-export async function open(): Promise<File> {
+export async function open(): Promise<TraceryFile> {
   return new Promise((resolve, reject) => {
     dialog.showOpenDialog({}, (fileNames) => {
       if (fileNames === undefined) {

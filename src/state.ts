@@ -3,6 +3,7 @@ export interface State {
   origin: string;
   nodes: string[];
   results: Result[];
+  filepath?: string;
 }
 
 export interface Result {

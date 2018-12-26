@@ -3,6 +3,8 @@ import AceEditor from 'react-ace';
 
 import { State } from './state';
 import ResultsPane from './components/ResultsPane';
+import { ipcRenderer } from 'electron';
+import { TraceryFile } from './fileIO';
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 require('brace');
@@ -38,6 +40,12 @@ export class App extends React.Component<{}, State> {
 
   componentDidMount = () => {
     this.onRefresh();
+
+    ipcRenderer.on('open', this.loadFile);
+  }
+
+  componentWillUnmount = () => {
+    ipcRenderer.removeListener('open', this.loadFile);
   }
 
   render() {
@@ -63,6 +71,13 @@ export class App extends React.Component<{}, State> {
         />;
       </div >
     );
+  }
+
+  //
+
+  loadFile = (_: any, file: TraceryFile) => {
+    console.log(file);
+    this.setState({ ...this.state, filepath: file.filepath, code: file.data });
   }
 
   onChange = (newValue: string) => {
