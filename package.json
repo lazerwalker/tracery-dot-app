@@ -1,7 +1,7 @@
 {
   "name": "tracery-dot-app",
   "productName": "Tracery",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "My Electron application description",
   "main": "src/index.ts",
   "scripts": {
@@ -21,7 +21,7 @@
           "squirrel"
         ],
         "darwin": [
-          "zip"
+          "dmg"
         ],
         "linux": [
           "deb",
@@ -37,8 +37,8 @@
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
       "github_repository": {
-        "owner": "",
-        "name": ""
+        "owner": "lazerwalker",
+        "name": "tracery-dot-app"
       },
       "windowsStoreConfig": {
         "packageName": "",
