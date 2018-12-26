@@ -133,7 +133,7 @@ export default (options: MenuOptions, window: BrowserWindow) => {
       submenu: [
         {
           label: 'Learn More',
-          click() { shell.openExternal('http://electron.atom.io'); }
+          click() { shell.openExternal('https://github.com/lazerwalker/tracery-dot-app'); }
         }
       ]
     }
