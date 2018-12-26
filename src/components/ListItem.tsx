@@ -17,10 +17,10 @@ export default class ListItem extends React.Component<Props, {}> {
     const { index, result } = this.props;
 
     const lockButton = <button
-      className='lock'
-      onClick={this.toggleLock}>
+      className={`lock ${result.locked ? 'locked' : 'unlocked'}`}
+      onClick={this.toggleLock} >
       <FontAwesomeIcon icon={result.locked ? faLock : faLockOpen} />
-    </button>;
+    </button >;
 
     return <li
       className='result'

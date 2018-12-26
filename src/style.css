@@ -25,6 +25,7 @@ button {
 
   height: 60px;
 
+  padding-top: 5px;
   position: relative;
   text-align: center;
 }
@@ -39,6 +40,7 @@ button {
   background: none !important;
   border: none !important;
   height: 80% !important;
+  margin-top: 10px;
 }
 
 
@@ -56,11 +58,17 @@ li button {
 
 button.lock {
   float: left;
-  margin-left: 20px;
+  margin-left: 15px;
+}
+
+.lock.unlocked {
+  color: #ccc;
 }
 
 li.result {
+  align-items: center;
   border-bottom: 0.5px solid #ccc;
+  display: flex;
   min-height: 9vh !important;
   list-style-type: none;
   margin: 0;
@@ -71,7 +79,7 @@ li.result {
 
 li.result p {
   margin: 0;
-  padding-left: 80px;
+  padding-left: 15px;
   padding-right: 50px;
   padding-top: 20px;
   padding-bottom: 20px;
