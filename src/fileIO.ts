@@ -2,8 +2,21 @@ import { dialog } from 'electron';
 
 import * as fs from 'fs';
 
-export function save() {
-  console.log('save');
+export async function save(file: TraceryFile): Promise<TraceryFile> {
+  console.log('SAVING FILE', file.filepath, file.data);
+  return new Promise((resolve, reject) => {
+    console.log('In promise');
+    fs.writeFile(file.filepath, file.data, 'utf8', (err) => {
+      if (err) {
+        reject('An error ocurred reading the file :' + err.message);
+        return;
+      }
+
+      console.log('Finished saving');
+
+      resolve(file);
+    });
+  });
 }
 
 export interface TraceryFile {

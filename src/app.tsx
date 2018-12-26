@@ -22,6 +22,7 @@ const tracery = require('tracery-grammar');
 
 export class App extends React.Component<{}, State> {
   state: State;
+  aceRef: React.Ref;
 
   constructor(props: any) {
     super(props);
@@ -36,16 +37,20 @@ export class App extends React.Component<{}, State> {
     grammar.addModifiers(tracery.baseEngModifiers);
     const code = JSON.stringify(rawGrammar, null, 2);
     this.state = { code, origin: 'origin', nodes: ['animal', 'emotion', 'origin'], results: [] };
+
+    this.aceRef = React.createRef();
   }
 
   componentDidMount = () => {
     this.onRefresh();
 
     ipcRenderer.on('open', this.loadFile);
+    ipcRenderer.on('save', this.saveFile);
   }
 
   componentWillUnmount = () => {
     ipcRenderer.removeListener('open', this.loadFile);
+    ipcRenderer.removeListener('save', this.saveFile);
   }
 
   render() {
@@ -68,6 +73,7 @@ export class App extends React.Component<{}, State> {
           onChange={this.onChange}
           name='editor'
           editorProps={{ $blockScrolling: true }}
+          ref={this.aceRef}
         />;
       </div >
     );
@@ -78,6 +84,23 @@ export class App extends React.Component<{}, State> {
   loadFile = (_: any, file: TraceryFile) => {
     console.log(file);
     this.setState({ ...this.state, filepath: file.filepath, code: file.data });
+  }
+
+  saveFile = () => {
+    const value = this.aceRef.current.editor.getValue();
+    console.log('Received save! Saving back', value;
+
+    if (!this.state.filepath) {
+      console.error('No filepath found!');
+      return;
+    }
+
+    const f: TraceryFile = {
+      filepath: this.state.filepath!,
+      data: value
+    };
+
+    ipcRenderer.send('save', f);
   }
 
   onChange = (newValue: string) => {
@@ -108,7 +131,7 @@ export class App extends React.Component<{}, State> {
         newResults[i].text = text;
       }
     }
-    console.log(newResults);
+
     return { ...state, results: newResults, nodes: Object.keys(grammar.symbols) };
   }
 

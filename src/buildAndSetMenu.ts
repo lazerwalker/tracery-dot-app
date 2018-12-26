@@ -35,7 +35,7 @@ export default (options: MenuOptions) => {
         {
           label: 'Save',
           accelerator: 'CmdOrCtrl+S',
-          click: () => console.log('Save')
+          click: options.save
         }
       ]
     },

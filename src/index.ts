@@ -1,7 +1,8 @@
-import { app, Menu, MenuItem } from 'electron';
+import { app, Menu, MenuItem, ipcMain } from 'electron';
 import { enableLiveReload } from 'electron-compile';
 
 import createWindow, { windows } from './createWindow';
+import { TraceryFile, save } from './fileIO';
 
 const menu = new Menu();
 
@@ -37,6 +38,11 @@ app.on('activate', () => {
   if (windows.length === 0) {
     createWindow();
   }
+});
+
+ipcMain.on('save', async (_: any, file: TraceryFile) => {
+  console.log('Received save', file.data);
+  await save(file);
 });
 
 // In this file you can include the rest of your app's specific main process
