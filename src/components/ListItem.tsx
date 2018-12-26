@@ -27,7 +27,7 @@ export default class ListItem extends React.Component<Props, {}> {
       key={`result-${index}`}>
       <CopyButton text={result.text} style={{ position: 'absolute', right: '10px' }} />
       {lockButton}
-      <p>{result.text}</p>
+      <p dangerouslySetInnerHTML={{ __html: result.text }} />
     </li>;
 
   }
