@@ -20,6 +20,18 @@ Some features include:
 
 **WARNING**: This app is incredibly insecure (there are specific issues with how I'm not sandboxing user input) that means you should be very careful pasting in any Tracery grammar code you did not write yourself. This is fine for my current personal use case, but caveat emptor. Follow https://github.com/lazerwalker/tracery-dot-app/issues/1 for more info.
 
+## Contributing
+
+Contributions are welcome!
+
+To get a dev environment up and running:
+
+1. Clone this repo
+2. Yarn install
+3. `electron-forge start` will spin up a dev copy of the app with an inspector attached.
+
+For more info on dev tooling, check out the [Electron Forge documentation](http://electronforge.io)
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file in this repo for more information.
