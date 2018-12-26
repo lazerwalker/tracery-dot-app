@@ -28,15 +28,18 @@ export class App extends React.Component<{}, State> {
     super(props);
 
     const rawGrammar = {
-      'animal': ['panda', 'fox', 'capybara', 'iguana'],
-      'emotion': ['sad', 'happy', 'angry', 'jealous'],
-      'origin': ['I am #emotion.a# #animal#.'],
+      'origin': ['Welcome to Tracery.app! We\'re so #adjective# you\'re using it.'],
+      'adjective': [
+        'excited',
+        'thrilled',
+        'happy'
+      ]
     };
 
     const grammar = tracery.createGrammar();
     grammar.addModifiers(tracery.baseEngModifiers);
     const code = JSON.stringify(rawGrammar, null, 2);
-    this.state = { code, origin: 'origin', nodes: ['animal', 'emotion', 'origin'], results: [] };
+    this.state = { code, origin: 'origin', nodes: ['origin', 'adjective'], results: [] };
 
     this.aceRef = React.createRef();
   }
