@@ -10,6 +10,8 @@ As you edit your Tracery grammar on the left, it'll live-reload new example text
 
 To download the latest release, go to the [GitHub Releases Tab](https://github.com/lazerwalker/tracery-dot-app/releases) in this repo. Right now, Tracery.app is only available for macOS.
 
+After moving Tracery.app to your Applications folder, you'll need to jump through some security hoops because I haven't yet set up my build process up with Apple codesigning.
+
 Windows and Linux builds are coming very soon. In the meanmwhile, Windows/Linux users can follow the development setup instructions below to build your own copy of the app.
 
 # Current Status
@@ -37,7 +39,7 @@ To get a dev environment up and running:
 2. Yarn install
 3. `electron-forge start` will spin up a dev copy of the app with an inspector attached.
 4. `electron-forge make` will compile you a full generated app binary for your current platform.
- 
+
 For more info on dev tooling, check out the [Electron Forge documentation](http://electronforge.io)
 
 ## License
