@@ -3,7 +3,7 @@ import { Menu, app, shell, MenuItem, BrowserWindow } from 'electron';
 import * as fileIO from './fileIO';
 import { MenuOptions } from './createWindow';
 
-export default (options: MenuOptions) => {
+export default (options: MenuOptions, window: BrowserWindow) => {
   const template = [
     {
       label: 'File',
@@ -20,7 +20,7 @@ export default (options: MenuOptions) => {
           accelerator: 'CmdOrCtrl+O',
           click: async () => {
             const data = await fileIO.open();
-            options.open(data);
+            options.open(data, window);
           }
         },
         {
@@ -35,7 +35,7 @@ export default (options: MenuOptions) => {
         {
           label: 'Save',
           accelerator: 'CmdOrCtrl+S',
-          click: options.save
+          click: () => options.save(window)
         }
       ]
     },

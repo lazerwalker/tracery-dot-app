@@ -49,6 +49,8 @@ export class App extends React.Component<{}, State> {
 
     ipcRenderer.on('open', this.loadFile);
     ipcRenderer.on('save', this.saveFile);
+
+    ipcRenderer.send('ready');
   }
 
   componentWillUnmount = () => {

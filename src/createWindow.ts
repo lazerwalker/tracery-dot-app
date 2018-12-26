@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import * as _ from 'lodash';
 
@@ -13,43 +13,59 @@ export let windows: Electron.BrowserWindow[] = [];
 
 export interface MenuOptions {
   newDocument: () => void;
-  open: (file: TraceryFile) => void;
-  save: (file: TraceryFile) => void;
+  open: (file: TraceryFile, window?: BrowserWindow) => void;
+  save: (window: BrowserWindow) => void;
 }
 
-const createWindow = async () => {
-  // Create the browser window.
-  let window = new BrowserWindow({
-    width: 800,
-    height: 600,
+const createWindow = async (): Promise<BrowserWindow> => {
+  return new Promise(async (resolve, reject) => {
+    // Create the browser window.
+    let window = new BrowserWindow({
+      width: 800,
+      height: 600,
+    });
+
+    windows.push(window);
+
+    // and load the index.html of the app.
+    window.loadURL(`file://${__dirname}/index.html`);
+
+    // Open the DevTools.
+    if (isDevMode) {
+      await installExtension(REACT_DEVELOPER_TOOLS);
+      window.webContents.openDevTools();
+    }
+
+    // Emitted when the window is closed.
+    window.on('closed', () => {
+      // Dereference the window object, usually you would store windows
+      // in an array if your app supports multi windows, this is the time
+      // when you should delete the corresponding element.
+      windows = _.without(windows, window);
+    });
+
+    buildAndSetMenu(options, window);
+
+    resolve(window);
   });
+};
 
-  windows.push(window);
-
-  // and load the index.html of the app.
-  window.loadURL(`file://${__dirname}/index.html`);
-
-  // Open the DevTools.
-  if (isDevMode) {
-    await installExtension(REACT_DEVELOPER_TOOLS);
-    window.webContents.openDevTools();
+const options: MenuOptions = {
+  newDocument: createWindow,
+  open: (file, window) => {
+    if (_.includes(windows, window)) {
+      window!.webContents.send('open', file);
+    } else {
+      createWindow().then(w => {
+        ipcMain.once('ready', () => {
+          w.webContents.send('open', file);
+        });
+      }).catch(e => console.log(e));
+    }
+  },
+  save: (window) => {
+    window.webContents.send('save');
   }
-
-  // Emitted when the window is closed.
-  window.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    windows = _.without(windows, window);
-  });
-
-  const options: MenuOptions = {
-    newDocument: createWindow,
-    open: (file) => { window.webContents.send('open', file); },
-    save: (file) => { window.webContents.send('save', file); }
-  };
-
-  buildAndSetMenu(options);
 };
 
 export default createWindow;
