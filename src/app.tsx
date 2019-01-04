@@ -49,6 +49,7 @@ export class App extends React.Component<{}, State> {
 
     ipcRenderer.on('open', this.loadFile);
     ipcRenderer.on('save', this.saveFile);
+    ipcRenderer.on('didSave', this.didSave);
     ipcRenderer.on('toggleWordWrap', this.toggleWordWrap);
     ipcRenderer.on('toggleHTMLRendering', this.toggleHTMLRendering);
     ipcRenderer.on('refresh', this.onRefresh);
@@ -106,6 +107,10 @@ export class App extends React.Component<{}, State> {
     };
 
     ipcRenderer.send('save', f);
+  }
+
+  didSave = (_: any, file: TraceryFile) => {
+    this.setState({ ...this.state, filepath: file.filepath });
   }
 
   onChange = (newValue: string) => {

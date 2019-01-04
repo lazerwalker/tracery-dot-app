@@ -40,7 +40,7 @@ app.on('activate', () => {
   }
 });
 
-app.on('open-file', async (sender: any, filepath: string) => {
+app.on('open-file', async (event: any, filepath: string) => {
   // TODO: This code copy/pasted from createWindow's options object
   const file = await fileIO.openFile(filepath);
   const window = await createWindow();
@@ -49,9 +49,9 @@ app.on('open-file', async (sender: any, filepath: string) => {
   });
 });
 
-ipcMain.on('save', async (_: any, file: fileIO.TraceryFile) => {
-  console.log('Received save', file.data);
-  await fileIO.save(file);
+ipcMain.on('save', async (event: any, file: fileIO.TraceryFile) => {
+  const newFile = await fileIO.save(file);
+  event.sender.send('didSave', newFile);
 });
 
 // In this file you can include the rest of your app's specific main process

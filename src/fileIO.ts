@@ -3,7 +3,7 @@ import { dialog, app } from 'electron';
 import * as fs from 'fs';
 
 export async function save(file: TraceryFile): Promise<TraceryFile> {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     if (file.filepath) {
       fs.writeFile(file.filepath, file.data, 'utf8', (err) => {
         if (err) {
@@ -15,7 +15,9 @@ export async function save(file: TraceryFile): Promise<TraceryFile> {
     } else {
       const filepath = dialog.showSaveDialog({});
       app.addRecentDocument(filepath);
-      return save({ filepath, data: file.data });
+
+      // Resolving a recursive async function is funny
+      resolve(await save({ filepath, data: file.data }));
     }
   });
 
