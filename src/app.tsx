@@ -1,5 +1,8 @@
 import * as React from 'react';
 import AceEditor from 'react-ace';
+import * as Prettier from 'prettier';
+
+import { Linter } from 'eslint';
 
 import { State } from './state';
 import ResultsPane from './components/ResultsPane';
@@ -24,8 +27,12 @@ export class App extends React.Component<{}, State> {
   state: State;
   aceRef: React.Ref;
 
+  linter: Linter;
+
   constructor(props: any) {
     super(props);
+
+    this.linter = new Linter();
 
     const rawGrammar = {
       'origin': ['Welcome to Tracery.app! We\'re so #adjective# you\'re using it.'],
@@ -94,12 +101,11 @@ export class App extends React.Component<{}, State> {
 
   loadFile = (_: any, file: TraceryFile) => {
     console.log(file);
-    this.setState({ ...this.state, filepath: file.filepath, code: file.data });
+    this.setState({ filepath: file.filepath, code: file.data });
   }
 
   saveFile = () => {
-    const value = this.aceRef.current.editor.getValue();
-    console.log('Received save! Saving back', value);
+    let value = this.formatJSON(this.aceRef.current.editor.getValue();
 
     const f: TraceryFile = {
       filepath: this.state.filepath!,
@@ -110,21 +116,38 @@ export class App extends React.Component<{}, State> {
   }
 
   didSave = (_: any, file: TraceryFile) => {
-    this.setState({ ...this.state, filepath: file.filepath });
+    this.setState({ filepath: file.filepath });
   }
 
   onChange = (newValue: string) => {
-    // TODO: Add in Redux
-    console.log('change', newValue);
-    let newState = this.calculateResults({ ...this.state, code: newValue });
+    const code = this.formatJSON(newValue);
+    console.log('change', code);
+    let newState = this.calculateResults({ ...this.state, code });
     this.setState(newState);
+  }
+
+  formatJSON = (oldCode: string) => {
+    let tempCode = `var foo = ${oldCode}`;
+    const messages = this.linter.verifyAndFix(tempCode, {
+      rules: {
+        'comma-dangle': ['error', 'never'],
+        'comma-style': ['error', 'last'],
+        indent: ['error', 2, {
+          ArrayExpression: 1,
+          ObjectExpression: 1
+        }],
+        'quote-props': 1,
+        quotes: 1
+      }
+    });
+    return messages.output.slice(10);
+    // return Prettier.format(oldCode, { parser: 'json' });
   }
 
   calculateResults = (state: State) => {
     const { origin, results } = state;
-    const code = this.aceRef.current.editor.getValue();
 
-    const grammar = tracery.createGrammar(JSON.parse(code));
+    const grammar = tracery.createGrammar(JSON.parse(state.code));
     grammar.addModifiers(tracery.baseEngModifiers);
 
     const newResults = [...results];
