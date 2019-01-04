@@ -29,6 +29,11 @@
         ]
       },
       "electronPackagerConfig": {
+        "osxNotarize": {
+          "appleId": "michael@lazerwalker.com",
+          "appleIdPassword": "@keychain:com.apple.account.AppleAccount.token"
+        },
+        "osxSign": true,
         "packageManager": "yarn"
       },
       "electronWinstallerConfig": {
