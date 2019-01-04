@@ -105,7 +105,9 @@ export class App extends React.Component<{}, State> {
   }
 
   saveFile = () => {
-    let value = this.formatJSON(this.aceRef.current.editor.getValue();
+    let value = this.aceRef.current.editor.getValue();
+    const code = this.formatJSON(value);
+    let newState = this.calculateResults({ ...this.state, code });
 
     const f: TraceryFile = {
       filepath: this.state.filepath!,
@@ -113,6 +115,8 @@ export class App extends React.Component<{}, State> {
     };
 
     ipcRenderer.send('save', f);
+
+    this.setState(newState);
   }
 
   didSave = (_: any, file: TraceryFile) => {
@@ -121,7 +125,6 @@ export class App extends React.Component<{}, State> {
 
   onChange = (newValue: string) => {
     const code = this.formatJSON(newValue);
-    console.log('change', code);
     let newState = this.calculateResults({ ...this.state, code });
     this.setState(newState);
   }
@@ -141,7 +144,6 @@ export class App extends React.Component<{}, State> {
       }
     });
     return messages.output.slice(10);
-    // return Prettier.format(oldCode, { parser: 'json' });
   }
 
   calculateResults = (state: State) => {
