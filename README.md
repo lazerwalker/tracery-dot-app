@@ -27,7 +27,6 @@ Some features include:
 * The clipboard icon next to any individual text, or the overall one, will copy the text to the clipboard
 * You can click the down arrow on the right-side menubar to change which node name is the root node to generate from.
 
-**WARNING**: This app is incredibly insecure (there are specific issues with how I'm not sandboxing user input) that means you should be very careful pasting in any Tracery grammar code you did not write yourself. This is fine for my current personal use case, but caveat emptor. Follow https://github.com/lazerwalker/tracery-dot-app/issues/1 for more info.
 
 ## Contributing
 
