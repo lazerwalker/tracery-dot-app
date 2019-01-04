@@ -119,8 +119,7 @@ export class App extends React.Component<{}, State> {
     const { origin, results } = state;
     const code = this.aceRef.current.editor.getValue();
 
-    // TODO: Do a security audit
-    const grammar = tracery.createGrammar(eval(`(function() { return ${code} })()`));
+    const grammar = tracery.createGrammar(JSON.parse(code));
     grammar.addModifiers(tracery.baseEngModifiers);
 
     const newResults = [...results];
