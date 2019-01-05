@@ -4,7 +4,6 @@ node_js:
 os:
   - linux
   - osx
-  - windows
 
 # Windows is slooooow
 # https://travis-ci.community/t/yarn-network-troubles/333
