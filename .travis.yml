@@ -17,5 +17,5 @@ addons:
       - rpm
 
 script:
-  - yarn publish
+  - yarn dist
   
