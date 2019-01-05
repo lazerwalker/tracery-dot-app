@@ -5,10 +5,6 @@ os:
   - linux
   - osx
 
-# Windows is slooooow
-# https://travis-ci.community/t/yarn-network-troubles/333
-before_install: yarn install --network-timeout 1000000 
-
 addons:
   apt:   
     packages:		      
