@@ -3,7 +3,7 @@ os: unstable
 cache:
   - node_modules
 environment:
-  GH_TOKEN:
+  GITHUB_TOKEN:
       secure: uIi1ek0ym4GAYdnJ0eQPiqDUPhFT/EG1su8oVu7EJdGO8PuGdsf0hCn2EVwufJE0/6bb/97NGIsR/E8Y3e
   matrix:
     - nodejs_version: 8
