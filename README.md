@@ -1,5 +1,8 @@
 # Tracery.app
 
+[![Linux Build Status](https://travis-ci.org/lazerwalker/tracery-dot-app.svg?branch=master)](https://travis-ci.org/lazerwalker/tracery-dot-app)
+[![Windows build status](https://ci.appveyor.com/api/projects/status/github/lazerwalker/tracery-dot-app?svg=true)](https://ci.appveyor.com/api/projects/status/github/lazerwalker/tracery-dot-app?svg=true)
+
 This is a simple desktop editor/IDE for [Tracery](https://github.com/galaxykate/tracery).
 
 ![The app](screenshot.png)
