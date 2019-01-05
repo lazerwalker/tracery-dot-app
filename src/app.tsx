@@ -124,8 +124,7 @@ export class App extends React.Component<{}, State> {
   }
 
   onChange = (newValue: string) => {
-    const code = this.formatJSON(newValue);
-    let newState = this.calculateResults({ ...this.state, code });
+    let newState = this.calculateResults({ ...this.state, code: newValue });
     this.setState(newState);
   }
 
@@ -143,6 +142,7 @@ export class App extends React.Component<{}, State> {
         quotes: 1
       }
     });
+
     return messages.output.slice(10);
   }
 
