@@ -11,10 +11,10 @@ os:
 before_install: yarn install --network-timeout 1000000 
 
 addons:
-  apt:
-    packages:
+  apt:   
+    packages:		      
       - fakeroot
-      - rpm-build
+      - rpm
 
 script:
   - yarn make
