@@ -10,6 +10,7 @@ addons:
   apt:
     packages:
       - fakeroot
+      - rpmbuild
 
 script:
   - yarn make
