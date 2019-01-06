@@ -1,5 +1,6 @@
 # 0.1.2
 
+* If the previous origin node no longer exists, change the active generation node to the first one in the list (which I think is currently sorted nondeterministically?) [@lazerwalker]
 * Added this changelog! [@lazerwalker]
 * Fixed bug where, after saving a new file, consecutive saves would continue to pop up the save location dialog [@lazerwalker]
 * Added automatic ESHint formatting on save and refresh (for now: adding quotes around keys, turning all quotes to double quotes, indentation, and removing trailing commas) [@lazerwalker]

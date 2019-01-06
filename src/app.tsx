@@ -8,6 +8,7 @@ import { State } from './state';
 import ResultsPane from './components/ResultsPane';
 import { ipcRenderer } from 'electron';
 import { TraceryFile } from './fileIO';
+import _ = require('lodash');
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 require('brace');
@@ -141,12 +142,17 @@ export class App extends React.Component<{}, State> {
   }
 
   calculateResults = (state: State) => {
-    const { origin, results } = state;
+    let { origin, results } = state;
 
     const grammar = tracery.createGrammar(JSON.parse(state.code));
     grammar.addModifiers(tracery.baseEngModifiers);
 
+    const nodes = Object.keys(grammar.symbols);
     const newResults = [...results];
+
+    if (!_.includes(nodes, origin)) {
+      origin = nodes[0];
+    }
 
     for (let i = 0; i < 10; i++) {
       if (newResults[i] && newResults[i].locked) {
@@ -162,12 +168,13 @@ export class App extends React.Component<{}, State> {
       }
     }
 
-    return { ...state, results: newResults, nodes: Object.keys(grammar.symbols) };
+    return { ...state, origin, results: newResults, nodes };
   }
 
   onRefresh = () => {
-    const results = this.calculateResults(this.state);
-    this.setState(results);
+    const code = this.aceRef.current.editor.getValue();
+    const newState = this.calculateResults({ ...this.state, code });
+    this.setState(newState);
   }
 
   onOriginChange = (origin: string) => {
