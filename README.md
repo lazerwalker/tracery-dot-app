@@ -29,6 +29,7 @@ Some features include:
 * Clipboard copy for any individual generated text, or all generated examples
 * Selection for which root node examples are generated from
 
+Worth noting: although Tracery's documentation suggests you can embed JavaScript code within your Tracery grammar (e.g. `{ letters: "a b c".split(" ") }`), this app only supports strict JSON for security purposes. This is a common tradeoff for Tracery-based tools; if you're used to using something like [Cheap Bots Done Quick](https://cheapbotsdonequick.com), you'll likely not even notice this.
 
 ## Contributing
 
