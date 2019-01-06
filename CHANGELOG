@@ -1,0 +1,13 @@
+# 0.1.2
+
+* Added this changelog! [@lazerwalker]
+* Fixed bug where, after saving a new file, consecutive saves would continue to pop up the save location dialog [@lazerwalker]
+* Added automatic ESHint formatting on save and refresh (for now: adding quotes around keys, turning all quotes to double quotes, indentation, and removing trailing commas) [@lazerwalker]
+* Restricted valid Tracery code from raw JS (e.g. `{ foo: "a b c".split(" ") }`) to strict JSON. [@lazerwalker]
+* Removed automatic Tracery refresh after you stop typing for a second [@lazerwalker]
+* Added automatic Tracery refresh when you save [@lazerwalker]
+* Added CI to automatically build/publish Windows and Linux builds [@lazerwalker]
+
+# 0.0.1
+
+Initial release!
