@@ -1,14 +1,13 @@
 import * as React from 'react';
 import AceEditor from 'react-ace';
-import * as Prettier from 'prettier';
 
 import { Linter } from 'eslint';
+import * as _ from 'lodash';
 
 import { State } from './state';
 import ResultsPane from './components/ResultsPane';
 import { ipcRenderer } from 'electron';
 import { TraceryFile } from './fileIO';
-import _ = require('lodash');
 
 // tslint:disable-next-line:no-require-imports no-var-requires
 require('brace');
@@ -123,8 +122,9 @@ export class App extends React.Component<{}, State> {
   }
 
   formatJSON = (oldCode: string) => {
-    let tempCode = `var foo = ${oldCode}`;
-    const messages = this.linter.verifyAndFix(tempCode, {
+    // TODO: This appears to work, but comma-dangle/style cause a TS error.
+    // Either they're doing nothing, or the typing definitions need a PR.
+    const options = {
       rules: {
         'comma-dangle': ['error', 'never'],
         'comma-style': ['error', 'last'],
@@ -135,8 +135,49 @@ export class App extends React.Component<{}, State> {
         'quote-props': 1,
         quotes: 1
       }
+    };
+
+    let tempCode = `var foo = ${oldCode}`;
+
+    const changes = this.linter.verify(tempCode, options);
+
+    let editor = this.aceRef.current.editor;
+
+    let cursorOffset = 0;
+
+    const range = editor.selection.getRange();
+    const cursor = range.end;
+
+    changes.forEach((c: any) => {
+      const text = c.fix.text;
+
+      // Sigh, Ace is 0-indexed but ESLint is 1-indexed
+      const start = { row: c.line - 1, column: c.column - 1 };
+
+      // WARNING: Right now, none of our fixes will affect multiple lines. That might change.
+      const originalLength = c.fix.range[1] - c.fix.range[0];
+      const end = { row: c.line - 1, column: c.column - 1 + originalLength };
+
+      if (start.row === cursor.row && start.column <= cursor.column) {
+        if (cursor.column <= end.column) {
+          // TODO: This is incorrect, but good enough for now
+          const diff = text.length - originalLength;
+          cursorOffset += Math.floor(diff / 2);
+        } else {
+          const diff = text.length - originalLength;
+          cursorOffset += diff;
+        }
+      }
     });
 
+    // TODO: Editing this in here is bad
+    editor.selection.setSelectionRange({
+      start: { row: range.start.row, column: range.start.column + cursorOffset },
+      end: { row: range.end.row, column: range.end.column + cursorOffset }
+    });
+
+    // TODO: Running the linter twice is inefficient, but is easier for now so long as it's performant enough
+    const messages = this.linter.verifyAndFix(tempCode, options);
     return messages.output.slice(10);
   }
 
