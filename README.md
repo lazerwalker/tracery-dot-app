@@ -43,7 +43,7 @@ To get a dev environment up and running:
 1. Clone this repo
 2. Yarn install
 3. `electron-forge start` will spin up a dev copy of the app with an inspector attached.
-4. `electron-forge make` will compile you a full generated app binary for your current platform.
+4. `electron-forge make` will compile you a full generated app binary for your current platform. If you're on a Mac, you'll either need to set up codesigning and notarization (documentation coming soon) or disable both of those by going into `package.json` and removing the `osxSign` and `osxNotarize` keys/objects from the `config -> forge -> electronPackagerConfig` subobject.
 
 For more info on dev tooling, check out the [Electron Forge documentation](http://electronforge.io)
 
