@@ -87,7 +87,6 @@ export class App extends React.Component<{}, State> {
           mode='javascript'
           theme='monokai'
           debounceChangePeriod={1000}
-          onChange={this.onChange}
           name='editor'
           editorProps={{ $blockScrolling: true }}
           ref={this.aceRef}
@@ -121,11 +120,6 @@ export class App extends React.Component<{}, State> {
 
   didSave = (_: any, file: TraceryFile) => {
     this.setState({ filepath: file.filepath });
-  }
-
-  onChange = (newValue: string) => {
-    let newState = this.calculateResults({ ...this.state, code: newValue });
-    this.setState(newState);
   }
 
   formatJSON = (oldCode: string) => {
