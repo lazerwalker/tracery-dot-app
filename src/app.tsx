@@ -105,13 +105,12 @@ export class App extends React.Component<{}, State> {
   }
 
   saveFile = () => {
-    let value = this.aceRef.current.editor.getValue();
-    const code = this.formatJSON(value);
+    let code = this.aceRef.current.editor.getValue();
     let newState = this.calculateResults({ ...this.state, code });
 
     const f: TraceryFile = {
       filepath: this.state.filepath!,
-      data: value
+      data: newState.code
     };
 
     ipcRenderer.send('save', f);
@@ -144,7 +143,9 @@ export class App extends React.Component<{}, State> {
   calculateResults = (state: State) => {
     let { origin, results } = state;
 
-    const grammar = tracery.createGrammar(JSON.parse(state.code));
+    const code = this.formatJSON(state.code);
+
+    const grammar = tracery.createGrammar(JSON.parse(code));
     grammar.addModifiers(tracery.baseEngModifiers);
 
     const nodes = Object.keys(grammar.symbols);
@@ -168,7 +169,7 @@ export class App extends React.Component<{}, State> {
       }
     }
 
-    return { ...state, origin, results: newResults, nodes };
+    return { ...state, origin, results: newResults, nodes, code };
   }
 
   onRefresh = () => {
