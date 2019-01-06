@@ -24,11 +24,12 @@ It's very early prerelease! Please open issues or tweet at me (https://twitter.c
 Some features include:
 
 * File saving/loading (wow!)
-* Automatically generate new text phrases when you stop typing (or press Cmd+R/Ctrl+R)
-* If your Tracery grammar generates HTML, we'll render that as HTML
-* Click the 'lock' icon over any individual generated text to prevent it from being written over when you regenerate examples
-* The clipboard icon next to any individual text, or the overall one, will copy the text to the clipboard
-* You can click the down arrow on the right-side menubar to change which node name is the root node to generate from.
+* Automatically generate new text phrases when you save or press Cmd/Ctrl+R
+* Automatic JSON formatting on save/refresh (automatic indentation, standardizing on double-quotes, removing trailing commas, etc)
+* HTML rendering, if your Tracery grammar generates HTML
+* Persistence of generated examples if you click the 'lock' icon over any individual generated text 
+* Clipboard copy for any individual generated text, or all generated examples
+* Selection for which root node examples are generated from
 
 
 ## Contributing
