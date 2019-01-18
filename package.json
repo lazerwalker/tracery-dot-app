@@ -10,7 +10,8 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "tslint --project tsconfig.json --type-check --force",
-    "dist": "electron-forge publish"
+    "dist": "electron-forge publish",
+    "icons": "rm -rf icons/*; electron-icon-maker --input=./icon.png --output=./; for i in $(find ./icons -type f -maxdepth 2); do mv $i ./icons; done; find ./icons -type d -empty -delete"
   },
   "keywords": [],
   "author": "lazerwalker",
@@ -30,6 +31,7 @@
         ]
       },
       "electronPackagerConfig": {
+        "icon": "icons/icon",
         "osxNotarize": {
           "appleId": "michael@lazerwalker.com",
           "appleIdPassword": "@keychain:com.apple.account.AppleAccount.token"
@@ -74,16 +76,17 @@
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.0.2",
+    "@types/eslint": "^4.16.5",
     "@types/lodash": "^4.14.119",
+    "@types/prettier": "^1.15.2",
     "@types/react": "^16.7.18",
     "@types/react-dom": "^0.14.20",
     "@types/reactstrap": "^6.4.3",
-    "@types/eslint": "^4.16.5",
-    "@types/prettier": "^1.15.2",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "electron-forge": "^5.2.3",
+    "electron-icon-maker": "^0.0.4",
     "electron-prebuilt-compile": "3.0.10",
     "tslint": "^5.1.0",
     "typescript": "~2.2.2"
